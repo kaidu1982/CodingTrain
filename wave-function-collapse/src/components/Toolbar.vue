@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ICON, useSetting } from '../store/setting';
-import { computed, ComputedRef, ref, watch, WritableComputedRef } from 'vue';
+import { useSetting } from '../store/setting';
+import { computed, WritableComputedRef } from 'vue';
 
 const { icon, updateIcon, dimension, updateDimension } = useSetting();
 
