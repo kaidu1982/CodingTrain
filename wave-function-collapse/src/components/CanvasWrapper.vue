@@ -13,9 +13,12 @@ import { Tile } from '../tile';
 import { useSetting } from '../store/setting';
 
 interface Data {
-    images: HTMLImageElement[];
+    circuit: HTMLImageElement[];
+    demo: HTMLImageElement[];
+    pipes: HTMLImageElement[];
+    roads: HTMLImageElement[];
 }
-const state: Data = reactive({ images: [] });
+const state: Data = reactive({ circuit: [], demo: [], pipes: [], roads: [] });
 
 const mainCanvasRef: Ref<HTMLCanvasElement | undefined> =
     ref<HTMLCanvasElement>();
@@ -82,6 +85,7 @@ const draw = () => {
 
                 if (cell.collapsed) {
                     let index = cell.options[0];
+                    console.log('index', index, tiles[index]);
                     mainContext.drawImage(tiles[index].img, i * w, j * h, w, h);
                 } else {
                     mainContext.strokeStyle = '#515151';
@@ -180,7 +184,10 @@ const draw = () => {
 };
 
 onMounted(async () => {
-    state.images = preload();
+    state.circuit = preload();
+    state.demo = preload('demo');
+    state.pipes = preload('pipes');
+    state.roads = preload('roads');
 
     addTile();
 
@@ -192,22 +199,36 @@ onMounted(async () => {
 });
 
 const addTile = () => {
-    tiles[0] = new Tile(state.images[0], ['AAA', 'AAA', 'AAA', 'AAA']);
-    tiles[1] = new Tile(state.images[1], ['BBB', 'BBB', 'BBB', 'BBB']);
-    tiles[2] = new Tile(state.images[2], ['BBB', 'BCB', 'BBB', 'BBB']);
-    tiles[3] = new Tile(state.images[3], ['BBB', 'BDB', 'BBB', 'BDB']);
-    tiles[4] = new Tile(state.images[4], ['ABB', 'BCB', 'BBA', 'AAA']);
-    tiles[5] = new Tile(state.images[5], ['ABB', 'BBB', 'BBB', 'BBA']);
-    tiles[6] = new Tile(state.images[6], ['BBB', 'BCB', 'BBB', 'BCB']);
-    tiles[7] = new Tile(state.images[7], ['BDB', 'BCB', 'BDB', 'BCB']);
-    tiles[8] = new Tile(state.images[8], ['BDB', 'BBB', 'BCB', 'BBB']);
-    tiles[9] = new Tile(state.images[9], ['BCB', 'BCB', 'BBB', 'BCB']);
-    tiles[10] = new Tile(state.images[10], ['BCB', 'BCB', 'BCB', 'BCB']);
-    tiles[11] = new Tile(state.images[11], ['BCB', 'BCB', 'BBB', 'BBB']);
-    tiles[12] = new Tile(state.images[12], ['BBB', 'BCB', 'BBB', 'BCB']);
+    tiles = [];
+    if (useSetting().icon === 'circuit') {
+        tiles[0] = new Tile(state.circuit[0], ['AAA', 'AAA', 'AAA', 'AAA']);
+        tiles[1] = new Tile(state.circuit[1], ['BBB', 'BBB', 'BBB', 'BBB']);
+        tiles[2] = new Tile(state.circuit[2], ['BBB', 'BCB', 'BBB', 'BBB']);
+        tiles[3] = new Tile(state.circuit[3], ['BBB', 'BDB', 'BBB', 'BDB']);
+        tiles[4] = new Tile(state.circuit[4], ['ABB', 'BCB', 'BBA', 'AAA']);
+        tiles[5] = new Tile(state.circuit[5], ['ABB', 'BBB', 'BBB', 'BBA']);
+        tiles[6] = new Tile(state.circuit[6], ['BBB', 'BCB', 'BBB', 'BCB']);
+        tiles[7] = new Tile(state.circuit[7], ['BDB', 'BCB', 'BDB', 'BCB']);
+        tiles[8] = new Tile(state.circuit[8], ['BDB', 'BBB', 'BCB', 'BBB']);
+        tiles[9] = new Tile(state.circuit[9], ['BCB', 'BCB', 'BBB', 'BCB']);
+        tiles[10] = new Tile(state.circuit[10], ['BCB', 'BCB', 'BCB', 'BCB']);
+        tiles[11] = new Tile(state.circuit[11], ['BCB', 'BCB', 'BBB', 'BBB']);
+        tiles[12] = new Tile(state.circuit[12], ['BBB', 'BCB', 'BBB', 'BCB']);
 
-    for (let i = 0; i < 12; i++) {
-        tiles[i].index = i;
+        for (let i = 0; i < 12; i++) {
+            tiles[i].index = i;
+        }
+    } else {
+        const iconType = useSetting().icon;
+        tiles[0] = new Tile(state[iconType][0], ['AAA', 'AAA', 'AAA', 'AAA']);
+        tiles[1] = new Tile(state[iconType][1], ['ABA', 'ABA', 'BBB', 'ABA']);
+        tiles[2] = new Tile(state[iconType][2], ['ABA', 'ABA', 'ABA', 'BBB']);
+        tiles[3] = new Tile(state[iconType][3], ['BBB', 'ABA', 'ABA', 'ABA']);
+        tiles[4] = new Tile(state[iconType][4], ['ABA', 'BBB', 'ABA', 'ABA']);
+
+        for (let i = 0; i < 5; i++) {
+            tiles[i].index = i;
+        }
     }
 
     // const initialTileCount = tiles.length;
@@ -219,7 +240,6 @@ const addTile = () => {
     //     tempTiles = removeDuplicatedTiles(tempTiles);
     //     tiles = tiles.concat(tempTiles);
     // }
-    console.log(tiles.length);
 
     // Generate the adjacency rules based on edges
     for (let i = 0; i < tiles.length; i++) {
@@ -234,6 +254,14 @@ watch(
     (dimension) => {
         DIM = dimension;
         startOver();
+    }
+);
+
+watch(
+    () => useSetting().icon,
+    (iconType) => {
+        console.log('change icon', iconType);
+        addTile();
     }
 );
 </script>

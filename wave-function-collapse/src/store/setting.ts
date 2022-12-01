@@ -9,13 +9,11 @@ export const useSetting = defineStore('setting', () => {
 
     const updateIcon = (iconType: ICON) => {
         icon.value = iconType;
-        console.log('icon.value', icon.value);
     };
 
     const dimension = ref<DIMENSION>(10);
     const updateDimension = (dimensionValue: DIMENSION) => {
         dimension.value = dimensionValue;
-        console.log('dimensionValue', dimensionValue);
     };
 
     return {
