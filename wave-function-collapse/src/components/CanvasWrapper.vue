@@ -6,10 +6,11 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, Ref } from 'vue';
+import { onMounted, reactive, ref, Ref, watch } from 'vue';
 import { preload, removeDuplicatedTiles } from '../util';
 import { Cell } from '../cell';
 import { Tile } from '../tile';
+import { useSetting } from '../store/setting';
 
 interface Data {
     images: HTMLImageElement[];
@@ -21,7 +22,7 @@ const mainCanvasRef: Ref<HTMLCanvasElement | undefined> =
 const width = ref(400);
 const height = ref(400);
 
-const DIM = 10;
+let DIM = 10;
 let tiles: Tile[] = [];
 let grid: Cell[] = [];
 
@@ -74,7 +75,7 @@ const draw = () => {
 
         const w = width.value / DIM;
         const h = height.value / DIM;
-        console.log('w, h', w, h);
+
         for (let j = 0; j < DIM; j++) {
             for (let i = 0; i < DIM; i++) {
                 let cell = grid[i + j * DIM];
@@ -228,6 +229,13 @@ const addTile = () => {
 
     startOver();
 };
+watch(
+    () => useSetting().dimension,
+    (dimension) => {
+        DIM = dimension;
+        startOver();
+    }
+);
 </script>
 
 <style lang="scss" scoped>

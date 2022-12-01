@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.41"
+    "vue": "^3.2.41",
+    "vuetify": "^3.0.3",
+    "pinia": "^2.0.27"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",
