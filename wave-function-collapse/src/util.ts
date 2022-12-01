@@ -1,7 +1,7 @@
 import { Tile } from './tile';
 
 export const preload = (type = 'circuit') => {
-    const path = `/tiles/${type}`;
+    const path = `./tiles/${type}`;
 
     return new Array(13).fill(0).map((value: any, index: number) => {
         const img = new Image();

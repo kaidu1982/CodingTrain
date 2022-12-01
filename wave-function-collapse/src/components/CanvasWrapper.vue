@@ -85,7 +85,7 @@ const draw = () => {
 
                 if (cell.collapsed) {
                     let index = cell.options[0];
-                    console.log('index', index, tiles[index]);
+
                     mainContext.drawImage(tiles[index].img, i * w, j * h, w, h);
                 } else {
                     mainContext.strokeStyle = '#515151';
@@ -259,8 +259,7 @@ watch(
 
 watch(
     () => useSetting().icon,
-    (iconType) => {
-        console.log('change icon', iconType);
+    () => {
         addTile();
     }
 );
