@@ -20,13 +20,13 @@
                 color="deep-purple-accent-3"
                 group
             >
-                <v-btn value="5"> 5 </v-btn>
+                <v-btn :value="5"> 5 </v-btn>
 
-                <v-btn value="10"> 10 </v-btn>
+                <v-btn :value="10"> 10 </v-btn>
 
-                <v-btn value="15"> 15 </v-btn>
+                <v-btn :value="15"> 15 </v-btn>
 
-                <v-btn value="20"> 20 </v-btn>
+                <v-btn :value="20"> 20 </v-btn>
             </v-btn-toggle>
         </div>
     </div>
