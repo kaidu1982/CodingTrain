@@ -5,10 +5,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "dev": "node_modules/.bin/vite",
+    "build": "node_modules/.bin/vue-tsc && vite build",
+    "preview": "node_modules/.bin/vite preview",
+    "deploy": "node_modules/.bin/gh-pages -d dist"
   },
   "dependencies": {
     "vue": "^3.2.41",

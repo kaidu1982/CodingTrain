@@ -4,5 +4,5 @@
 
 P5.js를 제거하고 Pure Canvas API를 사용했습니다.
 
-![GIF animation of WFC algorithm](gifs/wfc.gif)
+![GIF animation of WFC algorithm](../gifs/wfc.gif)
 
