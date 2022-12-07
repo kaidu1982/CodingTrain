@@ -10,6 +10,7 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/',
         alias: '/pages',
+        redirect: '/imageToAscii',
         component: MainTemplate,
         children: [
             {
