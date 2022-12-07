@@ -1,6 +1,25 @@
 import { Tile } from './tile';
 
-export const preload = (type = 'circuit') => {
+export const loadGloria: () => Promise<CanvasRenderingContext2D> =
+    async (): Promise<CanvasRenderingContext2D> => {
+        return new Promise((resolve) => {
+            const img = new Image();
+
+            img.src = './etc/gloria48.jpg';
+            img.onload = () => {
+                const context: CanvasRenderingContext2D = document
+                    .createElement('canvas')
+                    .getContext('2d') as CanvasRenderingContext2D;
+
+                context.canvas.width = img.width;
+                context.canvas.height = img.height;
+                context.drawImage(img, 0, 0);
+                resolve(context);
+            };
+        });
+    };
+
+export const preloadTiles = (type = 'circuit') => {
     const path = `./tiles/${type}`;
 
     return new Array(13).fill(0).map((value: any, index: number) => {

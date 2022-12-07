@@ -1,9 +1,7 @@
 <template>
     <div class="image-to-ascii">
         <h3>Image To Ascii</h3>
-        <div>
-            <input ref="file" type="file" @change="handleFileUpload($event)" />
-        </div>
+
         <div class="photo-list">
             <canvas ref="mainCanvasRef" />
             <canvas ref="greyCanvasRef" />
@@ -14,131 +12,72 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, Ref } from 'vue';
-
-const fileInput = ref<HTMLInputElement | null>(null);
-const file = ref<File | null>();
+import { loadGloria } from '@/components/util';
 
 const mainCanvasRef: Ref<HTMLCanvasElement | undefined> =
     ref<HTMLCanvasElement>();
 
 const greyCanvasRef: Ref<HTMLCanvasElement | undefined> =
     ref<HTMLCanvasElement>();
-const asciiImageRef: Ref<Element | undefined> = ref<Element>();
+
 const width = ref(400);
 const height = ref(400);
 
-const grayRamp =
-    '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,"^`\'. ';
-const rampLength = grayRamp.length;
+const renderGloria = async () => {
+    const gloriaImg = await loadGloria();
 
-const getCharacterForGrayScale = (grayScale: number) =>
-    grayRamp[Math.ceil(((rampLength - 1) * grayScale) / 255)];
-
-const drawAscii = (grayScales: Uint8ClampedArray, width: number) => {
-    const ascii = grayScales.reduce((asciiImage, grayScale, index) => {
-        let nextChars = getCharacterForGrayScale(grayScale);
-
-        if ((index + 1) % width === 0) {
-            nextChars += '\n';
-        }
-
-        return asciiImage + nextChars;
-    }, '');
-
-    (asciiImageRef.value as Element).textContent = ascii;
-};
-
-const MAXIMUM_WIDTH = 80;
-const MAXIMUM_HEIGHT = 50;
-
-const clampDimensions = (width: number, height: number) => {
-    if (height > MAXIMUM_HEIGHT) {
-        const reducedWidth = Math.floor((width * MAXIMUM_HEIGHT) / height);
-        return [reducedWidth, MAXIMUM_HEIGHT];
+    if (mainContext) {
+        mainContext.drawImage(
+            gloriaImg.canvas,
+            0,
+            0,
+            mainContext.canvas.width,
+            mainContext.canvas.height
+        );
     }
+    if (greyContext) {
+        const imageData = gloriaImg.getImageData(
+            0,
+            0,
+            gloriaImg.canvas.width,
+            gloriaImg.canvas.height
+        );
+        const w = greyContext.canvas.width / gloriaImg.canvas.width;
+        const h = greyContext.canvas.height / gloriaImg.canvas.height;
+        const originalPixels = new Uint8ClampedArray(imageData.data);
 
-    if (width > MAXIMUM_WIDTH) {
-        const reducedHeight = Math.floor((height * MAXIMUM_WIDTH) / width);
-        return [MAXIMUM_WIDTH, reducedHeight];
-    }
+        greyContext.fillStyle = '#000000';
+        greyContext.fillRect(
+            0,
+            0,
+            greyContext.canvas.width,
+            greyContext.canvas.height
+        );
+        greyContext.font = `${w}px arial`;
+        greyContext.textAlign = 'center';
+        greyContext.textBaseline = 'middle';
+        for (let i = 0; i < gloriaImg.canvas.width; i++) {
+            for (let j = 0; j < gloriaImg.canvas.height; j++) {
+                const pixelIndex = (i + j * gloriaImg.canvas.width) * 4;
+                const r = originalPixels[pixelIndex + 0];
+                const g = originalPixels[pixelIndex + 1];
+                const b = originalPixels[pixelIndex + 2];
+                const avg = (r + g + b) / 3;
 
-    return [width, height];
-};
+                const charIndex = Math.floor((avg / 255) * density.length);
 
-const handleFileUpload = ($event: Event) => {
-    const target = $event.target as HTMLInputElement;
-    if (target && target.files) {
-        file.value = target.files[0];
-    }
-
-    console.log('file.value', file.value);
-
-    // const file = fileInput.value?.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-        const image = new Image();
-        image.onload = () => {
-            if (mainContext && greyContext) {
-                mainContext.canvas.width = image.width;
-                mainContext.canvas.height = image.height;
-
-                mainContext.drawImage(image, 0, 0);
-
-                const imageData = mainContext.getImageData(
-                    0,
-                    0,
-                    image.width,
-                    image.height
+                greyContext.fillStyle = `rgb(${avg},${avg},${avg})`;
+                greyContext.fillText(
+                    density.charAt(charIndex),
+                    i * w + w * 0.5,
+                    j * h + h * 0.5
                 );
-                const originalPixels = new Uint8ClampedArray(imageData.data);
-
-                const [width, height] = clampDimensions(
-                    image.width,
-                    image.height
-                );
-
-                console.log('clampDimensions', width, height);
-
-                greyContext.canvas.width = width;
-                greyContext.canvas.height = height;
-                const grayScales = toRGBA(originalPixels, width, height);
-
-                imageData.data.set(grayScales);
-                greyContext.putImageData(imageData, 0, 0);
-
-                drawAscii(grayScales, image.width);
             }
-        };
-
-        image.src = event.target?.result as string;
-    };
-
-    reader.readAsDataURL(file.value as File);
-};
-
-const toRGBA = (pixels: Uint8ClampedArray, width: number, height: number) => {
-    const resultPixels = new Uint8ClampedArray(pixels.length);
-
-    let p = 0;
-    let w = 0;
-
-    for (let i = 0; i < height; i++) {
-        for (let j = 0; j < width; j++) {
-            const value =
-                pixels[w] * 0.299 +
-                pixels[w + 1] * 0.587 +
-                pixels[w + 2] * 0.114;
-            //var value = (pixels[w] * 4899 + pixels[w + 1] * 9617 + pixels[w + 2] * 1868 + 8192) >> 14;
-            resultPixels[p++] = value;
-            resultPixels[p++] = value;
-            resultPixels[p++] = value;
-            resultPixels[p++] = pixels[w + 3];
-
-            w += 4;
         }
     }
-    return resultPixels;
 };
+
+const density = 'Ñ@#W$9876543210?!abc;:+=-,._ ';
 
 let mainContext: CanvasRenderingContext2D | undefined = undefined;
 let greyContext: CanvasRenderingContext2D | undefined = undefined;
@@ -154,10 +93,6 @@ const initCanvas = () => {
         mainContext = mainCanvasRef.value.getContext(
             '2d'
         ) as CanvasRenderingContext2D;
-
-        // mainContext.scale(devicePixelRatio, devicePixelRatio);
-        // mainContext.fillStyle = '#000000';
-        // mainContext.fillRect(0, 0, width.value, height.value);
     }
 
     if (greyCanvasRef.value) {
@@ -167,13 +102,12 @@ const initCanvas = () => {
         greyContext = greyCanvasRef.value.getContext(
             '2d'
         ) as CanvasRenderingContext2D;
-
-        // greyContext.scale(devicePixelRatio, devicePixelRatio);
     }
 };
 
 onMounted(async () => {
     initCanvas();
+    await renderGloria();
 });
 </script>
 

@@ -28,6 +28,7 @@ import { routerPush } from '@/router.js';
     }
 
     div.menu {
+        margin: 4px 0;
         cursor: pointer;
         &:hover {
             color: #049ef4;

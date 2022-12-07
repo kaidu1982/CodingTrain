@@ -7,7 +7,7 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, Ref, watch } from 'vue';
-import { preload } from './util';
+import { preloadTiles } from './util';
 import { Cell } from '../cell';
 import { Tile } from './tile';
 import { useSetting } from '../store/setting';
@@ -184,10 +184,10 @@ const draw = () => {
 };
 
 onMounted(async () => {
-    state.circuit = preload();
-    state.demo = preload('demo');
-    state.pipes = preload('pipes');
-    state.roads = preload('roads');
+    state.circuit = preloadTiles();
+    state.demo = preloadTiles('demo');
+    state.pipes = preloadTiles('pipes');
+    state.roads = preloadTiles('roads');
 
     addTile();
 
