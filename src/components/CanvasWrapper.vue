@@ -7,9 +7,9 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, Ref, watch } from 'vue';
-import { preload } from '../util';
+import { preload } from './util';
 import { Cell } from '../cell';
-import { Tile } from '../tile';
+import { Tile } from './tile';
 import { useSetting } from '../store/setting';
 
 interface Data {
