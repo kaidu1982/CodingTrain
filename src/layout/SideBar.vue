@@ -18,7 +18,7 @@ import { routerPush } from '@/router.js';
     height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 0 16px;
+    padding: 24px 16px;
     overflow-y: auto;
     overflow-x: hidden;
     border-right: 1px solid #e8e8e8;

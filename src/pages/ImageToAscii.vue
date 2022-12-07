@@ -115,7 +115,9 @@ onMounted(async () => {
 .image-to-ascii {
     display: flex;
     flex-direction: column;
-
+    h3 {
+        margin: 16px 0;
+    }
     .photo-list {
         div,
         canvas {
