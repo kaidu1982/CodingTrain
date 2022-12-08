@@ -59,7 +59,7 @@ const renderGloria = async () => {
             context.canvas.width,
             context.canvas.height
         );
-        console.log('videoRef.value', videoRef.value);
+
         mainContext.drawImage(
             context.canvas,
             0,
@@ -139,7 +139,6 @@ const initCanvas = () => {
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then((mediaStream) => {
-            console.log('mediaStream', mediaStream);
             if (videoRef.value) {
                 videoRef.value.srcObject = mediaStream;
             }
