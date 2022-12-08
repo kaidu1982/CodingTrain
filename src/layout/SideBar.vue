@@ -2,6 +2,9 @@
     <div class="sidebar">
         <h2>Example</h2>
         <div class="menu" @click="routerPush('ImageToAscii')">ImageToAscii</div>
+        <div class="menu" @click="routerPush('CameraToAscii')">
+            CameraToAscii
+        </div>
         <div class="menu" @click="routerPush('WaveFunctionCollapse')">
             WaveFunctionCollapse
         </div>

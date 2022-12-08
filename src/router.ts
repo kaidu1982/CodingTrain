@@ -3,8 +3,12 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import MainTemplate from '@/layout/MainTemplate.vue';
 import ImageToAscii from '@/pages/ImageToAscii.vue';
 import WaveFunctionCollapse from '@/pages/WaveFunctionCollapse.vue';
+import CameraToAscii from '@/pages/CameraToAscii.vue';
 
-export type AppRouteNames = 'ImageToAscii' | 'WaveFunctionCollapse';
+export type AppRouteNames =
+    | 'ImageToAscii'
+    | 'CameraToAscii'
+    | 'WaveFunctionCollapse';
 
 export const routes: RouteRecordRaw[] = [
     {
@@ -17,6 +21,11 @@ export const routes: RouteRecordRaw[] = [
                 name: 'ImageToAscii',
                 path: 'imageToAscii',
                 component: ImageToAscii,
+            },
+            {
+                name: 'CameraToAscii',
+                path: 'cameraToAscii',
+                component: CameraToAscii,
             },
             {
                 name: 'WaveFunctionCollapse',
