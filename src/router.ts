@@ -5,10 +5,12 @@ import ImageToAscii from '@/pages/ImageToAscii.vue';
 import WaveFunctionCollapse from '@/pages/WaveFunctionCollapse.vue';
 import CameraToAscii from '@/pages/CameraToAscii.vue';
 import AnimatedCirclePacking from '@/pages/AnimatedCirclePacking.vue';
+import AnimatedCirclePackingColor from '@/pages/AnimatedCirclePackingColor.vue';
 
 export type AppRouteNames =
     | 'ImageToAscii'
     | 'AnimatedCirclePacking'
+    | 'AnimatedCirclePackingColor'
     | 'CameraToAscii'
     | 'WaveFunctionCollapse';
 
@@ -23,6 +25,11 @@ export const routes: RouteRecordRaw[] = [
                 name: 'AnimatedCirclePacking',
                 path: 'animatedCirclePacking',
                 component: AnimatedCirclePacking,
+            },
+            {
+                name: 'AnimatedCirclePackingColor',
+                path: 'animatedCirclePackingColor',
+                component: AnimatedCirclePackingColor,
             },
             {
                 name: 'ImageToAscii',

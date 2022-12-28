@@ -19,6 +19,24 @@ export const loadGloria: () => Promise<CanvasRenderingContext2D> =
         });
     };
 
+export const loadImage: () => Promise<CanvasRenderingContext2D> =
+    async (): Promise<CanvasRenderingContext2D> => {
+        return new Promise((resolve) => {
+            const img = new Image();
+
+            img.src = './etc/imjinkang.jpeg';
+            img.onload = () => {
+                const context: CanvasRenderingContext2D = document
+                    .createElement('canvas')
+                    .getContext('2d') as CanvasRenderingContext2D;
+
+                context.canvas.width = img.width;
+                context.canvas.height = img.height;
+                context.drawImage(img, 0, 0);
+                resolve(context);
+            };
+        });
+    };
 export const preloadTiles = (type = 'circuit') => {
     const path = `./tiles/${type}`;
 

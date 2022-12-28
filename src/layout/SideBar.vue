@@ -14,6 +14,17 @@
         <div
             class="menu"
             :class="{
+                selected:
+                    router.currentRoute.value.path ===
+                    '/animatedCirclePackingColor',
+            }"
+            @click="routerPush('AnimatedCirclePackingColor')"
+        >
+            AnimatedCirclePackingColor
+        </div>
+        <div
+            class="menu"
+            :class="{
                 selected: router.currentRoute.value.path === '/imageToAscii',
             }"
             @click="routerPush('ImageToAscii')"

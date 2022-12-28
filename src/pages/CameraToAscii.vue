@@ -4,12 +4,7 @@
 
         <div class="photo-list">
             <div>
-                <video
-                    ref="videoRef"
-                    width="48"
-                    height="48"
-                    autoplay=""
-                ></video>
+                <video ref="videoRef" width="48" height="48"></video>
             </div>
             <div>
                 <h4>original</h4>

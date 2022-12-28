@@ -1,36 +1,36 @@
 <template>
     <div class="circle-packing">
-        <div>
-            <v-text-field
-                v-model="keyword"
-                @keydown.enter="changeKeyword"
-            ></v-text-field>
-        </div>
-
+        <img src="/etc/imjinkang.jpeg" />
         <canvas ref="mainCanvasRef" />
     </div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref, Ref } from 'vue';
+import { loadImage } from '@/components/util';
 
 const ani = ref();
-const keyword = ref<string>('HI 2023');
-const context = document.createElement('canvas').getContext('2d');
+
 const mainCanvasRef: Ref<HTMLCanvasElement | undefined> =
     ref<HTMLCanvasElement>();
 
 let lastTimestamp = 0;
 let renderTime = 0;
 
+let bgImage: undefined | CanvasRenderingContext2D;
+
 const circles: Circle[] = [];
-const bubbleDrawablePixel: Position[] = [];
+
 const addCircle = () => {
-    const { x, y } =
-        bubbleDrawablePixel[
-            Math.floor(Math.random() * bubbleDrawablePixel.length)
-        ];
-    if (!checkCollision(x, y)) circles.push(new Circle(x, y));
+    if (bgImage) {
+        const x = Math.floor(Math.random() * bgImage.canvas.width);
+        const y = Math.floor(Math.random() * bgImage.canvas.height);
+
+        const p = bgImage.getImageData(x, y, 1, 1).data;
+
+        const color = `rgb(${p[0]}, ${p[1]}, ${p[2]})`;
+        if (!checkCollision(x, y)) circles.push(new Circle(x, y, color));
+    }
 };
 const checkCollision = (x: number, y: number) => {
     const collision = circles.find((c: Circle) => {
@@ -78,21 +78,19 @@ const growAllCircles = () => {
 const drawAllCircles = () => {
     const canvasEl = mainCanvasRef.value as HTMLCanvasElement;
 
-    const path = new Path2D();
-
     const mainContext: CanvasRenderingContext2D = (
         mainCanvasRef.value as HTMLCanvasElement
     ).getContext('2d') as CanvasRenderingContext2D;
     mainContext.fillStyle = '#000000';
     mainContext.fillRect(0, 0, canvasEl.clientWidth, canvasEl.clientHeight);
 
-    mainContext.strokeStyle = '#eeeeee';
     circles.forEach((c: Circle) => {
+        mainContext.strokeStyle = c.color;
+        const path = new Path2D();
         path.moveTo(c.x + c.r, c.y);
         path.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        mainContext.stroke(path);
     });
-
-    mainContext.stroke(path);
 };
 const draw = (timestamp: number) => {
     if (lastTimestamp > 0) {
@@ -100,7 +98,7 @@ const draw = (timestamp: number) => {
         renderTime += delta;
 
         if (renderTime > 50) {
-            Array(15)
+            Array(100)
                 .fill(0)
                 .forEach(() => {
                     addCircle();
@@ -113,45 +111,16 @@ const draw = (timestamp: number) => {
     }
 
     lastTimestamp = timestamp;
-    if (circles.length < 2000) ani.value = requestAnimationFrame(draw);
+    if (circles.length < 30000) ani.value = requestAnimationFrame(draw);
 };
 const changeKeyword = () => {
-    console.log('changeKeyword', keyword.value);
-    if (context) {
-        circles.length = 0;
-        const canvasEl = mainCanvasRef.value as HTMLCanvasElement;
-        const width = canvasEl.clientWidth;
-        const height = canvasEl.clientHeight;
-        bubbleDrawablePixel.length = 0;
-        context.canvas.width = canvasEl.width;
-        context.canvas.height = canvasEl.height;
-
-        context.fillStyle = '#000000';
-        context.fillRect(0, 0, width, height);
-        context.fillStyle = '#ffffff';
-        context.textAlign = 'center';
-        context.textBaseline = 'middle';
-        context.font = 'bold 230px Noto Sans KR';
-
-        context.fillText(keyword.value, width * 0.5, height * 0.5);
-
-        const imageData = context.getImageData(0, 0, width, height);
-        const pixels = new Uint8ClampedArray(imageData.data);
-        for (let x = 0; x < width; x++) {
-            for (let y = 0; y < height; y++) {
-                const pixelIndex = (x + y * width) * 4;
-                const r = pixels[pixelIndex + 0];
-                const g = pixels[pixelIndex + 1];
-                const b = pixels[pixelIndex + 2];
-                if (r > 200 && g > 200 && b > 200) {
-                    bubbleDrawablePixel.push({ x, y });
-                }
-            }
-        }
-    }
+    cancelAnimationFrame(ani.value);
+    ani.value = requestAnimationFrame(draw);
 };
 onMounted(async () => {
+    bgImage = await loadImage();
     const canvasEl = mainCanvasRef.value as HTMLCanvasElement;
+
     const devicePixelRatio = window.devicePixelRatio ?? 1;
     canvasEl.width = devicePixelRatio * canvasEl.clientWidth;
     canvasEl.height = devicePixelRatio * canvasEl.clientHeight;
@@ -163,7 +132,6 @@ onMounted(async () => {
     mainContext.scale(devicePixelRatio, devicePixelRatio);
 
     changeKeyword();
-    ani.value = requestAnimationFrame(draw);
 });
 
 onUnmounted(() => {
@@ -183,11 +151,13 @@ class Circle {
     x: number;
     y: number;
     r: number;
+    color: string;
     growable: boolean;
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, color: string) {
         this.x = x;
         this.y = y;
         this.r = 2;
+        this.color = color;
         this.growable = true;
     }
 
@@ -199,15 +169,14 @@ class Circle {
 
 <style lang="scss" scoped>
 .circle-packing {
-    display: flex;
-    flex-direction: column;
-
-    > div {
-        width: 900px;
+    img {
+        width: 600px;
+        height: 450px;
     }
     canvas {
-        width: 900px;
-        height: 600px;
+        margin-left: 20px;
+        width: 600px;
+        height: 450px;
     }
 }
 </style>
