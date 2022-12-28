@@ -1,11 +1,42 @@
 <template>
     <div class="sidebar">
         <h2>Example</h2>
-        <div class="menu" @click="routerPush('ImageToAscii')">ImageToAscii</div>
-        <div class="menu" @click="routerPush('CameraToAscii')">
+        <div
+            class="menu"
+            :class="{
+                selected:
+                    router.currentRoute.value.path === '/animatedCirclePacking',
+            }"
+            @click="routerPush('AnimatedCirclePacking')"
+        >
+            AnimatedCirclePacking
+        </div>
+        <div
+            class="menu"
+            :class="{
+                selected: router.currentRoute.value.path === '/imageToAscii',
+            }"
+            @click="routerPush('ImageToAscii')"
+        >
+            ImageToAscii
+        </div>
+        <div
+            class="menu"
+            :class="{
+                selected: router.currentRoute.value.path === '/cameraToAscii',
+            }"
+            @click="routerPush('CameraToAscii')"
+        >
             CameraToAscii
         </div>
-        <div class="menu" @click="routerPush('WaveFunctionCollapse')">
+        <div
+            class="menu"
+            :class="{
+                selected:
+                    router.currentRoute.value.path === '/waveFunctionCollapse',
+            }"
+            @click="routerPush('WaveFunctionCollapse')"
+        >
             WaveFunctionCollapse
         </div>
     </div>
@@ -13,6 +44,10 @@
 
 <script lang="ts" setup>
 import { routerPush } from '@/router.js';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+console.log('router.currentRoute.value.path', router.currentRoute.value.path);
 </script>
 
 <style lang="scss" scoped>
@@ -20,6 +55,7 @@ import { routerPush } from '@/router.js';
     width: 300px;
     height: 100vh;
     display: flex;
+    flex: 300px 0 0;
     flex-direction: column;
     padding: 24px 16px;
     overflow-y: auto;
@@ -35,6 +71,11 @@ import { routerPush } from '@/router.js';
         cursor: pointer;
         &:hover {
             color: #049ef4;
+        }
+
+        &.selected {
+            color: #049ef4;
+            text-decoration: underline;
         }
     }
 }
