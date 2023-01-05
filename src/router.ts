@@ -6,21 +6,28 @@ import WaveFunctionCollapse from '@/pages/WaveFunctionCollapse.vue';
 import CameraToAscii from '@/pages/CameraToAscii.vue';
 import AnimatedCirclePacking from '@/pages/AnimatedCirclePacking.vue';
 import AnimatedCirclePackingColor from '@/pages/AnimatedCirclePackingColor.vue';
+import Starfield from '@/pages/Starfield.vue';
 
 export type AppRouteNames =
     | 'ImageToAscii'
     | 'AnimatedCirclePacking'
     | 'AnimatedCirclePackingColor'
     | 'CameraToAscii'
-    | 'WaveFunctionCollapse';
+    | 'WaveFunctionCollapse'
+    | 'Starfield';
 
 export const routes: RouteRecordRaw[] = [
     {
         path: '/',
         alias: '/pages',
-        redirect: '/animatedCirclePacking',
+        redirect: '/starfield',
         component: MainTemplate,
         children: [
+            {
+                name: 'Starfield',
+                path: 'starfield',
+                component: Starfield,
+            },
             {
                 name: 'AnimatedCirclePacking',
                 path: 'animatedCirclePacking',

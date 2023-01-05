@@ -4,6 +4,15 @@
         <div
             class="menu"
             :class="{
+                selected: router.currentRoute.value.path === '/starfield',
+            }"
+            @click="routerPush('Starfield')"
+        >
+            Starfield
+        </div>
+        <div
+            class="menu"
+            :class="{
                 selected:
                     router.currentRoute.value.path === '/animatedCirclePacking',
             }"
