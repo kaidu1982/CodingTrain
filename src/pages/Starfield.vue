@@ -32,8 +32,8 @@ class Star {
     update() {
         this.z = this.z - 5;
         if (this.z < 1) {
-            this.x = Math.random() * width - width * 0.5;
-            this.y = Math.random() * height - height * 0.5;
+            this.x = Math.random() * width * 0.1 - width * 0.5 * 0.1;
+            this.y = Math.random() * height * 0.1 - height * 0.5 * 0.1;
             this.z = Math.random() * width;
             this.lastZ = this.z;
         }
@@ -71,7 +71,6 @@ const draw = (timestamp: number) => {
         renderTime += delta;
 
         if (renderTime > 50) {
-            console.log('fillrect');
             mainContext.fillStyle = '#000000';
             mainContext.save();
             mainContext.fillRect(0, 0, width, height);
@@ -99,7 +98,7 @@ onMounted(() => {
 
     mainContext.scale(devicePixelRatio, devicePixelRatio);
 
-    Array(400)
+    Array(1000)
         .fill(0)
         .forEach(() => {
             addStar();
