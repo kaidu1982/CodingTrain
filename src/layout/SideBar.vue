@@ -4,6 +4,16 @@
         <div
             class="menu"
             :class="{
+                selected:
+                    router.currentRoute.value.path === '/aStarPathFinding',
+            }"
+            @click="routerPush('AStarPathFinding')"
+        >
+            A* PathFinding
+        </div>
+        <div
+            class="menu"
+            :class="{
                 selected: router.currentRoute.value.path === '/starfield',
             }"
             @click="routerPush('Starfield')"
@@ -67,7 +77,6 @@ import { routerPush } from '@/router.js';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-console.log('router.currentRoute.value.path', router.currentRoute.value.path);
 </script>
 
 <style lang="scss" scoped>

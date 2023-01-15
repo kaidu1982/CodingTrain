@@ -7,6 +7,7 @@ import CameraToAscii from '@/pages/CameraToAscii.vue';
 import AnimatedCirclePacking from '@/pages/AnimatedCirclePacking.vue';
 import AnimatedCirclePackingColor from '@/pages/AnimatedCirclePackingColor.vue';
 import Starfield from '@/pages/Starfield.vue';
+import AStarPathFinding from '@/pages/AStarPathFinding.vue';
 
 export type AppRouteNames =
     | 'ImageToAscii'
@@ -14,15 +15,21 @@ export type AppRouteNames =
     | 'AnimatedCirclePackingColor'
     | 'CameraToAscii'
     | 'WaveFunctionCollapse'
-    | 'Starfield';
+    | 'Starfield'
+    | 'AStarPathFinding';
 
 export const routes: RouteRecordRaw[] = [
     {
         path: '/',
         alias: '/pages',
-        redirect: '/starfield',
+        redirect: '/aStarPathFinding',
         component: MainTemplate,
         children: [
+            {
+                name: 'AStarPathFinding',
+                path: 'aStarPathFinding',
+                component: AStarPathFinding,
+            },
             {
                 name: 'Starfield',
                 path: 'starfield',
