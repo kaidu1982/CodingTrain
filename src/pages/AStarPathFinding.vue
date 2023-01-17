@@ -18,8 +18,8 @@ const ani = ref();
 let w = 0;
 let h = 0;
 
-const cols = 15;
-const rows = 15;
+const cols = 50;
+const rows = 50;
 const grid: any[] = [];
 let path: Spot[] = [];
 
@@ -35,6 +35,7 @@ class Spot {
 
     neighbors: Spot[] = [];
     previous: Spot | undefined = undefined;
+    wall = false;
 
     constructor(i: number, j: number) {
         this.i = i;
@@ -42,10 +43,11 @@ class Spot {
         this.f = 0;
         this.g = 0;
         this.h = 0;
+        if (Math.random() < 0.1) this.wall = true;
     }
 
     show(color: string) {
-        mainContext.fillStyle = color;
+        mainContext.fillStyle = this.wall ? 'rgb(0, 0, 0)' : color;
         mainContext.beginPath();
         mainContext.rect(this.i * w, this.j * h, w - 1, h - 1);
         mainContext.fill();
@@ -57,6 +59,15 @@ class Spot {
 
         if (this.j < rows - 1) this.neighbors.push(grid[this.i][this.j + 1]);
         if (this.j > 0) this.neighbors.push(grid[this.i][this.j - 1]);
+
+        // if (this.i > 0 && this.j > 0)
+        //     this.neighbors.push(grid[this.i - 1][this.j - 1]);
+        // if (this.i < cols - 1 && this.j > 0)
+        //     this.neighbors.push(grid[this.i + 1][this.j - 1]);
+        // if (this.i > 0 && this.j < rows - 1)
+        //     this.neighbors.push(grid[this.i - 1][this.j + 1]);
+        // if (this.i < cols - 1 && this.j < rows - 1)
+        //     this.neighbors.push(grid[this.i + 1][this.j + 1]);
     }
 }
 
@@ -73,15 +84,17 @@ const removeFromArray = (arr: Array<any>, elt: any) => {
 
 const heuristic = (a: Spot, b: Spot) => {
     // const d = dist(a.i, )
-    // const d = Math.sqrt((a.i - b.i) ** 2 + (a.j - b.j) ** 2);
-    const d = Math.abs(a.i - b.i) + Math.abs(a.j - b.j);
+    const d = Math.sqrt((a.i - b.i) ** 2 + (a.j - b.j) ** 2);
+    // const d = Math.abs(a.i - b.i) + Math.abs(a.j - b.j);
     return d;
 };
 const draw = (timestamp: number) => {
+    let done = false;
     if (lastTimestamp > 0) {
         const delta = timestamp - lastTimestamp;
         renderTime += delta;
 
+        console.log('clear');
         mainContext.clearRect(
             0,
             0,
@@ -100,6 +113,7 @@ const draw = (timestamp: number) => {
             current = openSet[winner];
             if (openSet[winner] === end) {
                 console.log('done');
+                done = true;
             }
             removeFromArray(openSet, current);
             closedSet.push(current);
@@ -108,25 +122,30 @@ const draw = (timestamp: number) => {
             const neighbors = current.neighbors;
             for (let i = 0; i < neighbors.length; i++) {
                 const neighbor = neighbors[i];
-                if (!closedSet.includes(neighbor)) {
+                if (!closedSet.includes(neighbor) && !neighbor.wall) {
                     let tempG = current.g + 1;
 
+                    let newPath = false;
                     if (openSet.includes(neighbor)) {
                         if (tempG < neighbor.g) {
                             neighbor.g = tempG;
+                            newPath = true;
                         }
                     } else {
                         neighbor.g = tempG;
-
+                        newPath = true;
                         openSet.push(neighbor);
                     }
 
-                    neighbor.h = heuristic(neighbor, end as Spot);
-                    neighbor.f = neighbor.g + neighbor.h;
-                    neighbor.previous = current;
+                    if (newPath) {
+                        neighbor.h = heuristic(neighbor, end as Spot);
+                        neighbor.f = neighbor.g + neighbor.h;
+                        neighbor.previous = current;
+                    }
                 }
             }
         } else {
+            console.error('no solution');
         }
 
         for (let i = 0; i < cols; i++) {
@@ -157,7 +176,7 @@ const draw = (timestamp: number) => {
         }
     }
     lastTimestamp = timestamp;
-    ani.value = requestAnimationFrame(draw);
+    if (!done) ani.value = requestAnimationFrame(draw);
 };
 
 onMounted(() => {
@@ -189,8 +208,10 @@ onMounted(() => {
     }
 
     start = grid[0][0] as Spot;
+    start.wall = false;
 
-    end = grid[cols - 1][rows - 1];
+    end = grid[cols - 1][rows - 1] as Spot;
+    end.wall = false;
 
     openSet.push(start);
 
