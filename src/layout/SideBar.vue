@@ -5,6 +5,16 @@
             class="menu"
             :class="{
                 selected:
+                    router.currentRoute.value.path === '/flockingSimulation',
+            }"
+            @click="routerPush('FlockingSimulation')"
+        >
+            FlockingSimulation
+        </div>
+        <div
+            class="menu"
+            :class="{
+                selected:
                     router.currentRoute.value.path === '/aStarPathFinding',
             }"
             @click="routerPush('AStarPathFinding')"

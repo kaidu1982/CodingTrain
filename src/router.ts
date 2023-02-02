@@ -8,6 +8,7 @@ import AnimatedCirclePacking from '@/pages/AnimatedCirclePacking.vue';
 import AnimatedCirclePackingColor from '@/pages/AnimatedCirclePackingColor.vue';
 import Starfield from '@/pages/Starfield.vue';
 import AStarPathFinding from '@/pages/AStarPathFinding.vue';
+import FlockingSimulation from '@/pages/FlockingSimulation.vue';
 
 export type AppRouteNames =
     | 'ImageToAscii'
@@ -16,15 +17,21 @@ export type AppRouteNames =
     | 'CameraToAscii'
     | 'WaveFunctionCollapse'
     | 'Starfield'
-    | 'AStarPathFinding';
+    | 'AStarPathFinding'
+    | 'FlockingSimulation';
 
 export const routes: RouteRecordRaw[] = [
     {
         path: '/',
         alias: '/pages',
-        redirect: '/aStarPathFinding',
+        redirect: '/flockingSimulation',
         component: MainTemplate,
         children: [
+            {
+                name: 'FlockingSimulation',
+                path: 'flockingSimulation',
+                component: FlockingSimulation,
+            },
             {
                 name: 'AStarPathFinding',
                 path: 'aStarPathFinding',
