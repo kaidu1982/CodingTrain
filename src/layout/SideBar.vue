@@ -4,6 +4,15 @@
         <div
             class="menu"
             :class="{
+                selected: router.currentRoute.value.path === '/quadTree',
+            }"
+            @click="routerPush('QuadTree')"
+        >
+            QuadTree
+        </div>
+        <div
+            class="menu"
+            :class="{
                 selected:
                     router.currentRoute.value.path === '/flockingSimulation',
             }"

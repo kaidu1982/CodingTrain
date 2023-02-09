@@ -9,8 +9,10 @@ import AnimatedCirclePackingColor from '@/pages/AnimatedCirclePackingColor.vue';
 import Starfield from '@/pages/Starfield.vue';
 import AStarPathFinding from '@/pages/AStarPathFinding.vue';
 import FlockingSimulation from '@/pages/FlockingSimulation.vue';
+import QuadTree from '@/pages/QuadTree.vue';
 
 export type AppRouteNames =
+    | 'QuadTree'
     | 'ImageToAscii'
     | 'AnimatedCirclePacking'
     | 'AnimatedCirclePackingColor'
@@ -24,9 +26,14 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/',
         alias: '/pages',
-        redirect: '/flockingSimulation',
+        redirect: '/quadTree',
         component: MainTemplate,
         children: [
+            {
+                name: 'QuadTree',
+                path: 'quadTree',
+                component: QuadTree,
+            },
             {
                 name: 'FlockingSimulation',
                 path: 'flockingSimulation',
