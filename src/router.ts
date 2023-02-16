@@ -11,8 +11,10 @@ import AStarPathFinding from '@/pages/AStarPathFinding.vue';
 import FlockingSimulation from '@/pages/FlockingSimulation.vue';
 import QuadTree from '@/pages/QuadTree.vue';
 import QuadTreeParticleCollisions from '@/pages/QuadTreeParticleCollisions.vue';
+import QuickSort from '@/pages/QuickSort.vue';
 
 export type AppRouteNames =
+    | 'QuickSort'
     | 'QuadTreeParticleCollisions'
     | 'QuadTree'
     | 'ImageToAscii'
@@ -28,9 +30,14 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/',
         alias: '/pages',
-        redirect: '/quadTreeParticleCollisions',
+        redirect: '/quickSort',
         component: MainTemplate,
         children: [
+            {
+                name: 'QuickSort',
+                path: 'quickSort',
+                component: QuickSort,
+            },
             {
                 name: 'QuadTreeParticleCollisions',
                 path: 'quadTreeParticleCollisions',

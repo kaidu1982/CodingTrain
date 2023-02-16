@@ -4,6 +4,15 @@
         <div
             class="menu"
             :class="{
+                selected: router.currentRoute.value.path === '/quickSort',
+            }"
+            @click="routerPush('QuickSort')"
+        >
+            QuickSort
+        </div>
+        <div
+            class="menu"
+            :class="{
                 selected:
                     router.currentRoute.value.path ===
                     '/quadTreeParticleCollisions',
