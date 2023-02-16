@@ -7,5 +7,5 @@ export const random = (n1: number, n2?: number | undefined) => {
     return minValue + Math.random() * range;
 };
 
-export const dist = (a: Vector2D, b: Vector2D) =>
-    Math.pow(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2), 1 / 2);
+export const dist = (x1: number, x2: number, y1: number, y2: number) =>
+    Math.pow(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2), 1 / 2);

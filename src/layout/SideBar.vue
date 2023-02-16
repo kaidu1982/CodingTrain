@@ -4,6 +4,17 @@
         <div
             class="menu"
             :class="{
+                selected:
+                    router.currentRoute.value.path ===
+                    '/quadTreeParticleCollisions',
+            }"
+            @click="routerPush('QuadTreeParticleCollisions')"
+        >
+            QuadTreeParticleCollisions
+        </div>
+        <div
+            class="menu"
+            :class="{
                 selected: router.currentRoute.value.path === '/quadTree',
             }"
             @click="routerPush('QuadTree')"

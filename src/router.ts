@@ -10,8 +10,10 @@ import Starfield from '@/pages/Starfield.vue';
 import AStarPathFinding from '@/pages/AStarPathFinding.vue';
 import FlockingSimulation from '@/pages/FlockingSimulation.vue';
 import QuadTree from '@/pages/QuadTree.vue';
+import QuadTreeParticleCollisions from '@/pages/QuadTreeParticleCollisions.vue';
 
 export type AppRouteNames =
+    | 'QuadTreeParticleCollisions'
     | 'QuadTree'
     | 'ImageToAscii'
     | 'AnimatedCirclePacking'
@@ -26,9 +28,14 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/',
         alias: '/pages',
-        redirect: '/quadTree',
+        redirect: '/quadTreeParticleCollisions',
         component: MainTemplate,
         children: [
+            {
+                name: 'QuadTreeParticleCollisions',
+                path: 'quadTreeParticleCollisions',
+                component: QuadTreeParticleCollisions,
+            },
             {
                 name: 'QuadTree',
                 path: 'quadTree',
