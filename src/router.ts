@@ -12,8 +12,10 @@ import FlockingSimulation from '@/pages/FlockingSimulation.vue';
 import QuadTree from '@/pages/QuadTree.vue';
 import QuadTreeParticleCollisions from '@/pages/QuadTreeParticleCollisions.vue';
 import QuickSort from '@/pages/QuickSort.vue';
+import RayCasting2D from '@/pages/RayCasting2D.vue';
 
 export type AppRouteNames =
+    | 'RayCasting2D'
     | 'QuickSort'
     | 'QuadTreeParticleCollisions'
     | 'QuadTree'
@@ -33,6 +35,11 @@ export const routes: RouteRecordRaw[] = [
         redirect: '/quickSort',
         component: MainTemplate,
         children: [
+            {
+                name: 'RayCasting2D',
+                path: 'rayCasting2D',
+                component: RayCasting2D,
+            },
             {
                 name: 'QuickSort',
                 path: 'quickSort',

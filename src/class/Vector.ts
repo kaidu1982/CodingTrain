@@ -8,9 +8,16 @@ export const fromAngle = (angle: number, length = 1) => {
     return new Vector2D(length * Math.cos(angle), length * Math.sin(angle));
 };
 
-export const createVector = () => {
-    return new Vector2D();
+export const createVector = (x = 0, y = 0) => {
+    return new Vector2D(x, y);
 };
+
+export const dist = (a: Vector2D, b: Vector2D): number => {
+    a.sub(b);
+
+    return a.mag();
+};
+
 export class Vector2D {
     x: number;
     y: number;
@@ -20,11 +27,16 @@ export class Vector2D {
         this.y = y;
     }
 
+    set(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+
     copy() {
         return new Vector2D(this.x, this.y);
     }
 
-    mag() {
+    mag(): number {
         return Math.sqrt(this.magSq());
     }
     setMag(length: number) {
@@ -57,7 +69,7 @@ export class Vector2D {
             this.multiScale(max);
         }
     }
-    magSq() {
+    magSq(): number {
         const x = this.x;
         const y = this.y;
 

@@ -4,6 +4,15 @@
         <div
             class="menu"
             :class="{
+                selected: router.currentRoute.value.path === '/rayCasting2D',
+            }"
+            @click="routerPush('RayCasting2D')"
+        >
+            RayCasting2D
+        </div>
+        <div
+            class="menu"
+            :class="{
                 selected: router.currentRoute.value.path === '/quickSort',
             }"
             @click="routerPush('QuickSort')"
