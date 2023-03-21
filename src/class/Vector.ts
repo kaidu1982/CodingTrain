@@ -4,7 +4,7 @@ export const random2D = () => {
     return fromAngle(Math.random() * Math.PI * 2);
 };
 
-export const fromAngle = (angle: number, length = 1) => {
+export const fromAngle = (angle: number, length = 1): Vector2D => {
     return new Vector2D(length * Math.cos(angle), length * Math.sin(angle));
 };
 
@@ -16,6 +16,30 @@ export const dist = (a: Vector2D, b: Vector2D): number => {
     a.sub(b);
 
     return a.mag();
+};
+
+export const constrain = (n: number, low: number, high: number) => {
+    return Math.max(Math.min(n, high), low);
+};
+
+export const map = (
+    n: number,
+    start1: number,
+    stop1: number,
+    start2: number,
+    stop2: number,
+    withinBounds?: number
+) => {
+    const newval =
+        ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
+    if (!withinBounds) {
+        return newval;
+    }
+    if (start2 < stop2) {
+        return constrain(newval, start2, stop2);
+    } else {
+        return constrain(newval, stop2, start2);
+    }
 };
 
 export class Vector2D {
@@ -82,5 +106,11 @@ export class Vector2D {
         // since div duplicates this zero check.
         if (len !== 0) this.multiScale(1 / len);
         return this;
+    }
+
+    heading() {
+        const h = Math.atan2(this.y, this.x);
+        // if (this.isPInst) return this._fromRadians(h);
+        return h;
     }
 }

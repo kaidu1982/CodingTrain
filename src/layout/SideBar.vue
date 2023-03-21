@@ -1,6 +1,29 @@
 <template>
     <div class="sidebar">
         <h2>Example</h2>
+
+        <div
+            class="menu"
+            :class="{
+                selected:
+                    router.currentRoute.value.path === '/steeringBehaviors',
+            }"
+            @click="routerPush('SteeringBehaviors')"
+        >
+            SteeringBehaviors
+        </div>
+
+        <div
+            class="menu"
+            :class="{
+                selected:
+                    router.currentRoute.value.path === '/renderingRayCasting',
+            }"
+            @click="routerPush('RenderingRayCasting')"
+        >
+            RenderingRayCasting
+        </div>
+
         <div
             class="menu"
             :class="{

@@ -13,8 +13,12 @@ import QuadTree from '@/pages/QuadTree.vue';
 import QuadTreeParticleCollisions from '@/pages/QuadTreeParticleCollisions.vue';
 import QuickSort from '@/pages/QuickSort.vue';
 import RayCasting2D from '@/pages/RayCasting2D.vue';
+import RenderingRayCasting from '@/pages/RenderingRayCasting.vue';
+import SteeringBehaviors from '@/pages/SteeringBehaviors.vue';
 
 export type AppRouteNames =
+    | 'SteeringBehaviors'
+    | 'RenderingRayCasting'
     | 'RayCasting2D'
     | 'QuickSort'
     | 'QuadTreeParticleCollisions'
@@ -32,9 +36,19 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/',
         alias: '/pages',
-        redirect: '/quickSort',
+        redirect: '/steeringBehaviors',
         component: MainTemplate,
         children: [
+            {
+                name: 'SteeringBehaviors',
+                path: 'steeringBehaviors',
+                component: SteeringBehaviors,
+            },
+            {
+                name: 'RenderingRayCasting',
+                path: 'renderingRayCasting',
+                component: RenderingRayCasting,
+            },
             {
                 name: 'RayCasting2D',
                 path: 'rayCasting2D',
