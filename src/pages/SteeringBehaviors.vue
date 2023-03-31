@@ -97,10 +97,12 @@ const textToPoints = () => {
     context.canvas.height = 30;
 
     context.fillStyle = 'rgb(0, 154, 253)';
+    context.strokeStyle = 'rgb(0, 154, 253)';
 
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
     context.font = '18px arial';
+
     context.fillText('TRAIN', 5, 16);
 
     const radius = 5;

@@ -6,6 +6,17 @@
             class="menu"
             :class="{
                 selected:
+                    router.currentRoute.value.path ===
+                    '/evolutionarySteeringBehaviors',
+            }"
+            @click="routerPush('EvolutionarySteeringBehaviors')"
+        >
+            EvolutionarySteeringBehaviors
+        </div>
+        <div
+            class="menu"
+            :class="{
+                selected:
                     router.currentRoute.value.path === '/steeringBehaviors',
             }"
             @click="routerPush('SteeringBehaviors')"

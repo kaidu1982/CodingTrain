@@ -113,4 +113,8 @@ export class Vector2D {
         // if (this.isPInst) return this._fromRadians(h);
         return h;
     }
+
+    dist(v: Vector2D) {
+        return dist(this.copy(), v);
+    }
 }

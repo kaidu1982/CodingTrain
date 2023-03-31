@@ -15,8 +15,10 @@ import QuickSort from '@/pages/QuickSort.vue';
 import RayCasting2D from '@/pages/RayCasting2D.vue';
 import RenderingRayCasting from '@/pages/RenderingRayCasting.vue';
 import SteeringBehaviors from '@/pages/SteeringBehaviors.vue';
+import EvolutionarySteeringBehaviors from '@/pages/EvolutionarySteeringBehaviors.vue';
 
 export type AppRouteNames =
+    | 'EvolutionarySteeringBehaviors'
     | 'SteeringBehaviors'
     | 'RenderingRayCasting'
     | 'RayCasting2D'
@@ -39,6 +41,11 @@ export const routes: RouteRecordRaw[] = [
         redirect: '/steeringBehaviors',
         component: MainTemplate,
         children: [
+            {
+                name: 'EvolutionarySteeringBehaviors',
+                path: 'evolutionarySteeringBehaviors',
+                component: EvolutionarySteeringBehaviors,
+            },
             {
                 name: 'SteeringBehaviors',
                 path: 'steeringBehaviors',
