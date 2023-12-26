@@ -16,6 +16,7 @@ import RayCasting2D from '@/pages/RayCasting2D.vue';
 import RenderingRayCasting from '@/pages/RenderingRayCasting.vue';
 import SteeringBehaviors from '@/pages/SteeringBehaviors.vue';
 import EvolutionarySteeringBehaviors from '@/pages/EvolutionarySteeringBehaviors.vue';
+import SelfAvoidingWalk from '@/pages/SelfAvoidingWalk.vue';
 
 export type AppRouteNames =
     | 'EvolutionarySteeringBehaviors'
@@ -32,7 +33,8 @@ export type AppRouteNames =
     | 'WaveFunctionCollapse'
     | 'Starfield'
     | 'AStarPathFinding'
-    | 'FlockingSimulation';
+    | 'FlockingSimulation'
+    | 'SelfAvoidingWalk';
 
 export const routes: RouteRecordRaw[] = [
     {
@@ -115,6 +117,12 @@ export const routes: RouteRecordRaw[] = [
                 name: 'WaveFunctionCollapse',
                 path: 'waveFunctionCollapse',
                 component: WaveFunctionCollapse,
+            },
+
+            {
+                name: 'SelfAvoidingWalk',
+                path: 'selfAvoidingWalk',
+                component: SelfAvoidingWalk,
             },
         ],
     },

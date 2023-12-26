@@ -151,6 +151,17 @@
         >
             WaveFunctionCollapse
         </div>
+
+        <div
+            class="menu"
+            :class="{
+                selected:
+                    router.currentRoute.value.path === '/selfAvoidingWalk',
+            }"
+            @click="routerPush('SelfAvoidingWalk')"
+        >
+            SelfAvoidingWalk
+        </div>
     </div>
 </template>
 
