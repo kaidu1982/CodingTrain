@@ -270,7 +270,7 @@ class QuadTree {
         this.southwest = new QuadTree(sw, this.capacity);
     }
 
-    query(range: Rectangle | Circle, found: undefined | Point[]) {
+    query(range: Rectangle | Circle, found?: Point[]) {
         if (!found) {
             found = [];
         }
@@ -301,10 +301,10 @@ class QuadTree {
         mainContext.strokeRect(left, top, w * 2, h * 2);
 
         if (this.divided) {
-            this.northeast.show();
-            this.northwest.show();
-            this.southeast.show();
-            this.southwest.show();
+            this.northeast?.show();
+            this.northwest?.show();
+            this.southeast?.show();
+            this.southwest?.show();
         }
 
         mainContext.beginPath();

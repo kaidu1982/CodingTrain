@@ -129,7 +129,12 @@ class Boid {
         let steering = createVector();
         let total = 0;
         for (let other of boids) {
-            let d = dist(this.position, other.position);
+            let d = dist(
+                this.position.x,
+                other.position.x,
+                this.position.y,
+                other.position.y
+            );
             if (other != this && d < perceptionRadius) {
                 let diff = this.position.copy();
                 diff.sub(other.position);
@@ -153,7 +158,12 @@ class Boid {
         let steering = createVector();
         let total = 0;
         for (let other of boids) {
-            let d = dist(this.position, other.position);
+            let d = dist(
+                this.position.x,
+                other.position.x,
+                this.position.y,
+                other.position.y
+            );
             if (other != this && d < perceptionRadius) {
                 steering.add(other.position);
                 total++;

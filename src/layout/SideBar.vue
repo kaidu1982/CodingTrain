@@ -27,17 +27,6 @@
         <div
             class="menu"
             :class="{
-                selected:
-                    router.currentRoute.value.path === '/renderingRayCasting',
-            }"
-            @click="routerPush('RenderingRayCasting')"
-        >
-            RenderingRayCasting
-        </div>
-
-        <div
-            class="menu"
-            :class="{
                 selected: router.currentRoute.value.path === '/rayCasting2D',
             }"
             @click="routerPush('RayCasting2D')"

@@ -212,10 +212,10 @@ class QuadTree {
         mainContext.strokeRect(left, top, w * 2, h * 2);
 
         if (this.divided) {
-            this.northeast.show();
-            this.northwest.show();
-            this.southeast.show();
-            this.southwest.show();
+            this.northeast?.show();
+            this.northwest?.show();
+            this.southeast?.show();
+            this.southwest?.show();
         }
 
         mainContext.beginPath();

@@ -21,7 +21,6 @@ import SelfAvoidingWalk from '@/pages/SelfAvoidingWalk.vue';
 export type AppRouteNames =
     | 'EvolutionarySteeringBehaviors'
     | 'SteeringBehaviors'
-    | 'RenderingRayCasting'
     | 'RayCasting2D'
     | 'QuickSort'
     | 'QuadTreeParticleCollisions'
@@ -53,11 +52,7 @@ export const routes: RouteRecordRaw[] = [
                 path: 'steeringBehaviors',
                 component: SteeringBehaviors,
             },
-            {
-                name: 'RenderingRayCasting',
-                path: 'renderingRayCasting',
-                component: RenderingRayCasting,
-            },
+
             {
                 name: 'RayCasting2D',
                 path: 'rayCasting2D',
