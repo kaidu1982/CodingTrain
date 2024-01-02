@@ -151,6 +151,15 @@
         >
             SelfAvoidingWalk
         </div>
+        <div
+            class="menu"
+            :class="{
+                selected: router.currentRoute.value.path === '/minesweeper',
+            }"
+            @click="routerPush('Minesweeper')"
+        >
+            Minesweeper
+        </div>
     </div>
 </template>
 

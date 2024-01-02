@@ -13,10 +13,10 @@ import QuadTree from '@/pages/QuadTree.vue';
 import QuadTreeParticleCollisions from '@/pages/QuadTreeParticleCollisions.vue';
 import QuickSort from '@/pages/QuickSort.vue';
 import RayCasting2D from '@/pages/RayCasting2D.vue';
-import RenderingRayCasting from '@/pages/RenderingRayCasting.vue';
 import SteeringBehaviors from '@/pages/SteeringBehaviors.vue';
 import EvolutionarySteeringBehaviors from '@/pages/EvolutionarySteeringBehaviors.vue';
 import SelfAvoidingWalk from '@/pages/SelfAvoidingWalk.vue';
+import Minesweeper from '@/pages/Minesweeper.vue';
 
 export type AppRouteNames =
     | 'EvolutionarySteeringBehaviors'
@@ -33,7 +33,8 @@ export type AppRouteNames =
     | 'Starfield'
     | 'AStarPathFinding'
     | 'FlockingSimulation'
-    | 'SelfAvoidingWalk';
+    | 'SelfAvoidingWalk'
+    | 'Minesweeper';
 
 export const routes: RouteRecordRaw[] = [
     {
@@ -118,6 +119,11 @@ export const routes: RouteRecordRaw[] = [
                 name: 'SelfAvoidingWalk',
                 path: 'selfAvoidingWalk',
                 component: SelfAvoidingWalk,
+            },
+            {
+                name: 'Minesweeper',
+                path: 'minesweeper',
+                component: Minesweeper,
             },
         ],
     },
